@@ -57,13 +57,12 @@ h1 {
   padding: 12px;
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(150px, 250px));
-  gap: 8px;
+  gap: 10px;
 }
 
 .bookcard {
   background-color: var(--light-background);
   padding: 12px;
-  border: 1px solid black;
   border-radius: 8px;
   font-size: 1.2rem;
   display: grid; 
@@ -97,7 +96,8 @@ h1 {
   background-color: rgb(186, 0, 0);
 }
 
-.bookcard button {
+.bookcard .read-btn, 
+.bookcard .delete-btn {
   border: none;
   border-radius: 12px;
   color: var(--light-background);
@@ -120,6 +120,7 @@ h1 {
 }
 
 .bookcard .fav-btn {
+  padding: none;
   border: none;
   background-color: var(--light-background);
   position: absolute;
@@ -127,4 +128,11 @@ h1 {
   right: 4px;
   cursor: pointer;
 }
+
+.fav-btn img:hover, 
+.fav-btn .favorited {
+  filter: invert(87%) sepia(15%) saturate(5908%) hue-rotate(359deg) brightness(104%) contrast(104%);
+}
+
+
 

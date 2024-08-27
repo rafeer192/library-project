@@ -21,22 +21,20 @@ function addBookToLibrary(title, author, numPages, isRead) {
   myLibrary.push(newBook); 
 }
 
-addBookToLibrary("The College", "Henry Coolidge", 201, false); 
-addBookToLibrary("The Calculator", "Jeffrey Mister", 312, true); 
-addBookToLibrary("The Book", "Arthur Wright", 452, true); 
-
 const bookCardsSection = document.querySelector("div.bookcards-wrapper"); 
 
 function displayLibrary() {
   for(let i = 0; i < myLibrary.length; ++i) {
     const bookCard = document.createElement("div"); 
     bookCard.classList.add("bookcard"); 
+    bookCard.setAttribute("data-index", i);     // !add a data attribute to correspond DOM placement w array placement
     const bookText = document.createElement("p"); 
     bookText.textContent = myLibrary[i].info();
     bookCard.appendChild(bookText);
     const deleteBtn = document.createElement("button"); 
     deleteBtn.classList.add("delete-btn");
     deleteBtn.textContent = "Remove"; 
+    deleteBtn.addEventListener("click", deleteHandler); 
     bookCard.appendChild(deleteBtn);
     const readBtn = document.createElement("button"); 
     readBtn.classList.add("read-btn"); 
@@ -47,17 +45,59 @@ function displayLibrary() {
       readBtn.textContent = "Read"; 
       readBtn.classList.add("read"); 
     }
+    readBtn.addEventListener("click", readHandler); 
     bookCard.appendChild(readBtn);
     const favBtn = document.createElement("a"); 
     const starIcon = document.createElement("img"); 
     favBtn.classList.add("fav-btn");
     starIcon.src = "./images/star-outline.svg"; 
-    starIcon.height = 25;
-    starIcon.alt = "A star used to favorite books"; 
-    favBtn.appendChild(starIcon); 
+    starIcon.alt = "A star meant to add this book to your favorites"; 
+    favBtn.appendChild(starIcon);
+    favBtn.addEventListener("click", favHandler); 
     bookCard.appendChild(favBtn);
     bookCardsSection.insertBefore(bookCard, bookCardsSection.lastElementChild);
   }
 }
 
+function deleteHandler(event) { // will delete from both array of book objects and DOM
+  myLibrary.splice(event.target.parentElement.dataset.index, 1);
+  bookCardsSection.removeChild(event.target.parentElement);
+}
+
+function readHandler(event) {
+  const bookText = event.target.parentElement.firstChild; // p element w book info is first child always
+  if(event.target.classList.contains("read")) {
+    event.target.classList.remove("read"); 
+    event.target.classList.add("not-read"); 
+    event.target.textContent = "Not read";
+    myLibrary[event.target.parentElement.dataset.index].isRead = true; 
+  } else if(event.target.classList.contains("not-read")) {
+    event.target.classList.remove("not-read"); 
+    event.target.classList.add("read"); 
+    event.target.textContent = "Read";
+    myLibrary[event.target.parentElement.dataset.index].isRead = false; 
+  }
+  bookText.textContent = myLibrary[event.target.parentElement.dataset.index].info(); // update book info text
+}
+
+function favHandler(event) {
+  if(!event.target.classList.contains("favorited")) {
+    const starFilledIcon = document.createElement("img"); 
+    starFilledIcon.src = "./images/star.svg"; 
+    starFilledIcon.alt = "A star showing that this book has been added to favorites"; 
+    starFilledIcon.classList.add("favorited"); 
+    event.target.parentElement.replaceChild(starFilledIcon, event.target);
+  } else {
+    const starIcon = document.createElement("img"); 
+    starIcon.src = "./images/star-outline.svg"; 
+    starIcon.alt = "A star meant to add this book to your favorites"; 
+    event.target.parentElement.replaceChild(starIcon, event.target); 
+  }
+}
+
+const addCard = document.querySelector(".add-card");
+
+addBookToLibrary("The College", "Henry Coolidge", 201, false); 
+addBookToLibrary("The Calculator", "Jeffrey Mister", 312, true); 
+addBookToLibrary("The Book", "Arthur Wright", 452, true); 
 displayLibrary();
