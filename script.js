@@ -23,39 +23,43 @@ function addBookToLibrary(title, author, numPages, isRead) {
 
 const bookCardsSection = document.querySelector("div.bookcards-wrapper"); 
 
+function createCard(index) {  // creates a book card DOM element based off the book object's index in the library array
+  const bookCard = document.createElement("div"); 
+  bookCard.classList.add("bookcard"); 
+  bookCard.setAttribute("data-index", index);     // !add a data attribute to correspond DOM placement w array placement
+  const bookText = document.createElement("p"); 
+  bookText.textContent = myLibrary[index].info();
+  bookCard.appendChild(bookText);
+  const deleteBtn = document.createElement("button"); 
+  deleteBtn.classList.add("delete-btn");
+  deleteBtn.textContent = "Remove"; 
+  deleteBtn.addEventListener("click", deleteHandler); 
+  bookCard.appendChild(deleteBtn);
+  const readBtn = document.createElement("button"); 
+  readBtn.classList.add("read-btn"); 
+  if(myLibrary[index].isRead) {
+    readBtn.textContent = "Not read"; 
+    readBtn.classList.add("not-read"); 
+  } else {
+    readBtn.textContent = "Read"; 
+    readBtn.classList.add("read"); 
+  }
+  readBtn.addEventListener("click", readHandler); 
+  bookCard.appendChild(readBtn);
+  const favBtn = document.createElement("a"); 
+  const starIcon = document.createElement("img"); 
+  favBtn.classList.add("fav-btn");
+  starIcon.src = "./images/star-outline.svg"; 
+  starIcon.alt = "A star meant to add this book to your favorites"; 
+  favBtn.appendChild(starIcon);
+  favBtn.addEventListener("click", favHandler); 
+  bookCard.appendChild(favBtn);
+  return bookCard; 
+}
+
 function displayLibrary() {
   for(let i = 0; i < myLibrary.length; ++i) {
-    const bookCard = document.createElement("div"); 
-    bookCard.classList.add("bookcard"); 
-    bookCard.setAttribute("data-index", i);     // !add a data attribute to correspond DOM placement w array placement
-    const bookText = document.createElement("p"); 
-    bookText.textContent = myLibrary[i].info();
-    bookCard.appendChild(bookText);
-    const deleteBtn = document.createElement("button"); 
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.textContent = "Remove"; 
-    deleteBtn.addEventListener("click", deleteHandler); 
-    bookCard.appendChild(deleteBtn);
-    const readBtn = document.createElement("button"); 
-    readBtn.classList.add("read-btn"); 
-    if(myLibrary[i].isRead) {
-      readBtn.textContent = "Not read"; 
-      readBtn.classList.add("not-read"); 
-    } else {
-      readBtn.textContent = "Read"; 
-      readBtn.classList.add("read"); 
-    }
-    readBtn.addEventListener("click", readHandler); 
-    bookCard.appendChild(readBtn);
-    const favBtn = document.createElement("a"); 
-    const starIcon = document.createElement("img"); 
-    favBtn.classList.add("fav-btn");
-    starIcon.src = "./images/star-outline.svg"; 
-    starIcon.alt = "A star meant to add this book to your favorites"; 
-    favBtn.appendChild(starIcon);
-    favBtn.addEventListener("click", favHandler); 
-    bookCard.appendChild(favBtn);
-    bookCardsSection.insertBefore(bookCard, bookCardsSection.lastElementChild);
+    bookCardsSection.insertBefore(createCard(i), bookCardsSection.lastElementChild);
   }
 }
 
@@ -115,8 +119,10 @@ addForm.addEventListener("submit", (event) => {
   const bookData = new FormData(addForm);
   console.log(Object.fromEntries(bookData));
   console.log(bookData.get("book-title"));
-  addBookToLibrary(bookData.get("book-title"), bookData.get("book-author"), 
-                   bookData.get("book-pages"), bookData.get("read-status"));
+  addBookToLibrary( bookData.get("book-title"), bookData.get("book-author"), 
+                   Number(bookData.get("book-pages")), Boolean(bookData.get("read-status")) );
+  const newBookCard = createCard(myLibrary.length-1); 
+  bookCardsSection.insertBefore(newBookCard, bookCardsSection.lastElementChild);
   addForm.reset();
   addDialog.close();
 }); 
