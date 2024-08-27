@@ -25,6 +25,8 @@ p, h1, h2, h3, h4, h5, h6 {
 
 :root {
   --light-background: #fafafa;
+  --dark-background: #cdd5df;
+  --standard-radius: 8px;
 }
 
 button {
@@ -36,7 +38,7 @@ div {
 }
 
 body {
-  background-color: #cdd5df; 
+  background-color: var(--dark-background); 
 }
 
 header {
@@ -63,7 +65,7 @@ h1 {
 .bookcard {
   background-color: var(--light-background);
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--standard-radius);
   font-size: 1.2rem;
   display: grid; 
   grid-template-columns: 1fr 1fr;
@@ -132,6 +134,24 @@ h1 {
 .fav-btn img:hover, 
 .fav-btn .favorited {
   filter: invert(87%) sepia(15%) saturate(5908%) hue-rotate(359deg) brightness(104%) contrast(104%);
+}
+
+.add-card {
+  border: 1px dashed black;
+  border-radius: var(--standard-radius);
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+}
+
+.add-card > button {
+  border: none;
+  background-color: var(--dark-background);
+  height: 100%;
+  width: 100%;
+  border-radius: var(--standard-radius);
+  font-size: 2em;
 }
 
 dialog {
