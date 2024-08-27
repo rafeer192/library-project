@@ -134,5 +134,6 @@ h1 {
   filter: invert(87%) sepia(15%) saturate(5908%) hue-rotate(359deg) brightness(104%) contrast(104%);
 }
 
-
-
+dialog {
+  margin: auto;
+}

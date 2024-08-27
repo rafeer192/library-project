@@ -95,7 +95,33 @@ function favHandler(event) {
   }
 }
 
-const addCard = document.querySelector(".add-card");
+const addBtn = document.querySelector(".add-card > button");
+const addDialog = document.querySelector(".add-card dialog");
+const cancelBtn = document.querySelector("dialog form button.cancel"); 
+const confirmBtn = document.querySelector(`dialog form button[type="submit"]`);
+const addForm = document.querySelector(".add-card dialog > form"); 
+
+addBtn.addEventListener("click", () => {
+  addDialog.showModal();
+}); 
+
+cancelBtn.addEventListener("click", () => {
+  addForm.reset();
+  addDialog.close();
+});
+
+addForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const bookData = new FormData(addForm);
+  console.log(Object.fromEntries(bookData));
+  console.log(bookData.get("book-title"));
+  addBookToLibrary(bookData.get("book-title"), bookData.get("book-author"), 
+                   bookData.get("book-pages"), bookData.get("read-status"));
+  addForm.reset();
+  addDialog.close();
+}); 
+
+
 
 addBookToLibrary("The College", "Henry Coolidge", 201, false); 
 addBookToLibrary("The Calculator", "Jeffrey Mister", 312, true); 
