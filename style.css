@@ -27,6 +27,8 @@ p, h1, h2, h3, h4, h5, h6 {
   --light-background: #fafafa;
   --dark-background: #cdd5df;
   --standard-radius: 8px;
+  --red-button: rgb(186, 0, 0); 
+  --green-button: rgb(3, 106, 34);
 }
 
 button {
@@ -91,11 +93,11 @@ h1 {
 }
 
 .read-btn.read {
-  background-color: rgb(3, 106, 34);
+  background-color: var(--green-button);
 }
 
 .read-btn.not-read {
-  background-color: rgb(186, 0, 0);
+  background-color: var(--red-button);
 }
 
 .bookcard .read-btn, 
@@ -109,11 +111,13 @@ h1 {
   transform: translateY(2px);
 }
 
-.read-btn.read:hover {
+.read-btn.read:hover,
+button.confirm:hover {
   background-color: rgb(0, 127, 38);
 }
 
-.read-btn.not-read:hover {
+.read-btn.not-read:hover,
+button.cancel:hover {
   background-color: rgb(202,0,0);
 }
 
@@ -156,4 +160,104 @@ h1 {
 
 dialog {
   margin: auto;
+  width: 40%;
+  border: 1px solid black; 
+  border-radius: var(--standard-radius);
+  box-shadow: 4px 4px 4px rgb(124, 124, 124);
+  padding: none;
+  background-color: var(--light-background);
+  line-height: 0.5;
 }
+
+form input {
+  width: 65%;
+  border: 1px solid #E5E7EB;
+  border-radius: 4px;
+  line-height: 0px;
+  padding: 8px;
+}
+
+form input:focus {
+  box-shadow: 2px 2px 4px rgb(180, 180, 180);
+  outline: none;
+  border-color: #227ec5; 
+}
+
+form label,
+form legend {
+  color: #5d5d5d;
+  font-weight: 700;
+  font-size: 12px;
+  margin: 0;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+fieldset ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+form fieldset {
+  box-sizing: border-box;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--standard-radius);
+  padding: 0;
+  line-height: 0.5;
+  width: 65%;
+  margin: 0;
+}
+
+form fieldset li {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 2px;
+  padding-left: 2px;
+}
+
+input[type="radio"] {
+  width: auto;
+  border: none;
+  margin: none;
+}
+
+input[type="radio"]:focus {
+  box-shadow: none;
+}
+
+.form-btns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.form-btns button {
+  padding: 20px 30px;
+  border-radius: 16px;
+  border: none;
+  color: var(--light-background);
+  font-size: 1.4rem;
+  white-space: default;
+  text-wrap: wrap;
+  line-height: normal;
+}
+
+button.cancel {
+  background-color: var(--red-button);
+}
+
+button.confirm {
+  background-color: var(--green-button);
+}
+
+
+
