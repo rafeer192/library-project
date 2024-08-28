@@ -117,8 +117,6 @@ cancelBtn.addEventListener("click", () => {
 addForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const bookData = new FormData(addForm);
-  console.log(Object.fromEntries(bookData));
-  console.log(bookData.get("book-title"));
   addBookToLibrary( bookData.get("book-title"), bookData.get("book-author"), 
                    Number(bookData.get("book-pages")), Boolean(bookData.get("read-status")) );
   const newBookCard = createCard(myLibrary.length-1); 
