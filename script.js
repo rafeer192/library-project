@@ -1,19 +1,21 @@
 const myLibrary = []; 
 
-function Book(title, author, numPages, isRead) {
-  this.title = title; 
-  this.author = author; 
-  this.numPages = numPages; 
-  this.isRead = isRead; 
-}
-Book.prototype.info = function() {
-  let infoString = `"${this.title}" \nby \n${this.author} \n${this.numPages} pages\n`; 
-  if(this.isRead) {
-    infoString += `read`; 
-  } else {
-    infoString += `not read`
+class Book {
+  constructor(title, author, numPages, isRead) {
+    this.title = title;
+    this.author = author; 
+    this.numPages = numPages; 
+    this.isRead = isRead;
   }
-  return infoString; 
+  info() {
+    let infoString = `"${this.title}" \nby \n${this.author} \n${this.numPages} pages\n`; 
+    if(this.isRead) {
+      infoString += `read`; 
+    } else {
+      infoString += `not read`
+    }
+    return infoString; 
+  }
 }
 
 function addBookToLibrary(title, author, numPages, isRead) {
