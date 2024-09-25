@@ -119,8 +119,14 @@ cancelBtn.addEventListener("click", () => {
 addForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const bookData = new FormData(addForm);
+  let readStatus; 
+  if(bookData.get("read-status") === "true") {
+    readStatus = true;
+  } else {
+    readStatus = false; 
+  }
   addBookToLibrary( bookData.get("book-title"), bookData.get("book-author"), 
-                   Number(bookData.get("book-pages")), Boolean(bookData.get("read-status")) );
+                   Number(bookData.get("book-pages")), readStatus );
   const newBookCard = createCard(myLibrary.length-1); 
   bookCardsSection.insertBefore(newBookCard, bookCardsSection.lastElementChild);
   addForm.reset();
